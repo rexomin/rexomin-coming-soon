@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rexomin | Coming Soon</title>
+    
+    <!-- Modern Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Outfit:wght@300;400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS Custom Properties for easy theme changes */
+        :root {
+            --bg-start: #1b2735;
+            --bg-end: #090a0f;
+            --primary-color: #00c6ff; /* Vibrant Cyan */
+            --secondary-color: #8e44ad; /* Deep Purple */
+            --text-color: #e0e0e0;
+            --subtle-text-color: #aaa;
+            --glow-color: rgba(0, 198, 255, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-end);
+            background-image: radial-gradient(ellipse at center, var(--bg-start) 0%, var(--bg-end) 100%);
+            color: var(--text-color);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Interactive mouse-following glow */
+        body::before {
+            content: '';
+            position: absolute;
+            top: var(--y, 50%);
+            left: var(--x, 50%);
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--glow-color) 0%, rgba(0, 198, 255, 0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        body:hover::before {
+            opacity: 1;
+        }
+        
+        /* Pure CSS Particle Animation */
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            pointer-events: none;
+            animation: move linear infinite;
+        }
+        
+        .container {
+            text-align: center;
+            padding: 20px;
+            z-index: 10;
+            max-width: 800px;
+        }
+        
+        .logo {
+            margin-bottom: 25px;
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out 0.5s forwards;
+        }
+        
+        .logo img {
+            width: 400px;
+            max-width: 90%;
+            height: auto;
+        }
+        
+        .coming-soon {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: var(--subtle-text-color);
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out 1s forwards;
+        }
+        
+        .slogan {
+            font-size: 1.7rem;
+            color: var(--text-color);
+            margin-top: 40px;
+            font-weight: 300;
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out 1.5s forwards;
+        }
+        
+        .separator {
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            margin: 40px auto;
+            border-radius: 2px;
+            opacity: 0;
+            animation: expandWidth 1.5s cubic-bezier(0.19, 1, 0.22, 1) 1.2s forwards;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            font-size: 0.8rem;
+            color: #555;
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out 2s forwards;
+        }
+        
+        /* Keyframe Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes expandWidth {
+            from {
+                width: 0;
+                opacity: 0;
+            }
+            to {
+                width: 80px;
+                opacity: 1;
+            }
+        }
+
+        @keyframes move {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .logo img {
+                width: 300px;
+            }
+            .slogan {
+                font-size: 1.4rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo img {
+                width: 250px;
+            }
+            .coming-soon {
+                font-size: 1rem;
+            }
+            .slogan {
+                font-size: 1.2rem;
+            }
+            body::before {
+                width: 300px;
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <!-- Your logo image -->
+            <img src="logo.png" alt="Rexomin Logo">
+        </div>
+        <div class="coming-soon">Launching Soon</div>
+        <div class="separator"></div>
+        <div class="slogan">Make Your Dreams Happen!</div>
+    </div>
+    
+    <div class="footer">© 2025 Rexomin. All rights reserved.</div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Interactive Mouse Glow ---
+            const body = document.body;
+            body.addEventListener('mousemove', e => {
+                requestAnimationFrame(() => {
+                    body.style.setProperty('--x', e.clientX + 'px');
+                    body.style.setProperty('--y', e.clientY + 'px');
+                });
+            });
+
+            // --- Particle System ---
+            const createParticles = () => {
+                const particleContainer = document.body;
+                // Clear existing particles if resizing
+                const existingParticles = document.querySelectorAll('.particle');
+                existingParticles.forEach(p => p.remove());
+
+                const particleCount = 50;
+                const windowHeight = window.innerHeight;
+                
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    
+                    const posX = Math.random() * window.innerWidth;
+                    const size = Math.random() * 3 + 1;
+                    const duration = Math.random() * 20 + 10; // 10s to 30s duration
+                    const delay = Math.random() * -20; // Start at random points in the animation
+
+                    particle.style.left = `${posX}px`;
+                    particle.style.top = `${windowHeight}px`; // Start particles from the bottom
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    particle.style.animationDuration = `${duration}s`;
+                    particle.style.animationDelay = `${delay}s`;
+                    
+                    particleContainer.appendChild(particle);
+                }
+            }
+            
+            // --- Event Listeners ---
+            createParticles();
+            
+            let resizeTimeout;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimeout);
+                // Debounce resize to avoid performance issues
+                resizeTimeout = setTimeout(createParticles, 300);
+            });
+        });
+    </script>
+</body>
+</html>
